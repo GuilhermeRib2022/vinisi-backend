@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { ocorrencia } from '../models/OcorrenciaModels.js';
+import { ocorrencia } from '../models/ocorrenciaModels.js';
 import authenticateToken from '../services/authenticateToken.js';
 import authorizeRole from '../services/authorizeRole.js';
 import pool from '../database.js';
