@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { estadofatura } from '../../models/estados/EstadoFaturaModels.js';
+import { estadofatura } from '../../models/estados/estadoFaturaModels.js';
 import authenticateToken from '../../services/authenticateToken.js';
 import authorizeRole from '../../services/authorizeRole.js';
 
