@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { Distritos } from '../models/DistritosModels.js';
+import { Distritos } from '../models/distritosModels.js';
 import authenticateToken from '../services/authenticateToken.js';
 import authorizeRole from '../services/authorizeRole.js';
 
