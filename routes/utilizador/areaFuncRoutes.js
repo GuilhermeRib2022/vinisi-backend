@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { areafunc } from '../../models/utilizador/AreaFuncModels.js';
+import { areafunc } from '../../models/utilizador/areaFuncModels.js';
 import authenticateToken from '../../services/authenticateToken.js';
 import authorizeRole from '../../services/authorizeRole.js';
 
