@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { estadopromocao } from '../../models/estados/EstadoPromocaoModels.js';
+import { estadopromocao } from '../../models/estados/estadoPromocaoModels.js';
 import authenticateToken from '../../services/authenticateToken.js';
 import authorizeRole from '../../services/authorizeRole.js';
 
