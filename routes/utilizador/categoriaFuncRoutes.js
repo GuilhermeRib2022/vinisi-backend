@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { categoriafunc } from '../../models/utilizador/CategoriaFuncModels.js';
+import { categoriafunc } from '../../models/utilizador/categoriaFuncModels.js';
 import authenticateToken from '../../services/authenticateToken.js';
 import authorizeRole from '../../services/authorizeRole.js';
 
