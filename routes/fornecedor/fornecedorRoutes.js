@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { fornecedor } from '../../models/fornecedor/FornecedorModels.js';
+import { fornecedor } from '../../models/fornecedor/fornecedorModels.js';
 import authenticateToken from '../../services/authenticateToken.js';
 import authorizeRole from '../../services/authorizeRole.js';
 import validarNIF from '../../services/validarNIF.js'
