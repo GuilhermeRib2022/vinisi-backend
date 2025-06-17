@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { armazem } from '../models/ArmazemModels.js';
+import { armazem } from '../models/armazemModels.js';
 import authenticateToken from '../services/authenticateToken.js';
 import authorizeRole from '../services/authorizeRole.js';
 
