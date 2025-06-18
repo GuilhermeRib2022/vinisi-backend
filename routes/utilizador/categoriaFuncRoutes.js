@@ -8,17 +8,17 @@ router.use(authenticateToken);
 
 // Obter todas as categoriafunc
 router.get('/', async (req, res) => {
-  const categoriafunc = await categoriafunc.getAll();
-  res.json(categoriafunc);
+  const result = await categoriafunc.getAll();
+  res.json(result);
 });
 
 
 
 // Obter categoriafunc por ID
 router.get('/:id', async (req, res) => {
-  const categoriafunc = await categoriafunc.getById(req.params.id);
-  if (!categoriafunc) return res.status(404).json({ error: 'categoriafunc não encontrada' });
-  res.json(categoriafunc);
+  const result = await categoriafunc.getById(req.params.id);
+  if (!result) return res.status(404).json({ error: 'categoriafunc não encontrada' });
+  res.json(result);
 });
 
 // Adicionar categoriafunc
