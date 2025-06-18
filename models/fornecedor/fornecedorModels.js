@@ -68,7 +68,7 @@ export const fornecedor = {
       }
 
       await pool.query(
-        'INSERT INTO FornecedorProdutos (FornecedorID, ProdutoID) VALUES (?, ?)',
+        'INSERT INTO fornecedorprodutos (FornecedorID, ProdutoID) VALUES (?, ?)',
         [fornecedorID, produtoID]
       );
 
@@ -93,7 +93,7 @@ export const fornecedor = {
       }
 
       await pool.query(
-        'DELETE FROM FornecedorProdutos WHERE FornecedorID = ? AND ProdutoID = ?',
+        'DELETE FROM fornecedorprodutos WHERE FornecedorID = ? AND ProdutoID = ?',
         [fornecedorID, produtoID]
       );
 
@@ -108,7 +108,7 @@ export const fornecedor = {
   async listarProdutosFornecedor(fornecedorID) {
     const [rows] = await pool.query(
       `SELECT p.ID, p.Nome
-     FROM FornecedorProdutos fp
+     FROM fornecedorprodutos fp
      JOIN produto p ON fp.ProdutoID = p.ID
      WHERE fp.FornecedorID = ? AND p.Estado = 'ativo'`,
       [fornecedorID]
@@ -129,7 +129,7 @@ export const fornecedor = {
   async listar(fornecedorID) {
     const [rows] = await pool.query(`
     SELECT p.ID, p.Nome
-    FROM FornecedorProdutos fp
+    FROM fornecedorprodutos fp
     JOIN produto p ON p.ID = fp.ProdutoID
     WHERE fp.FornecedorID = ? AND p.Estado = 'ativo'
   `, [fornecedorID]);
@@ -139,3 +139,4 @@ export const fornecedor = {
 
 
 };
+
