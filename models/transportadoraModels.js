@@ -9,7 +9,7 @@ export const transportadora = {
         t.CriadorID, criador.nome AS CriadorNome, 
         t.AlteradorID, alterador.nome AS AlteradorNome, 
         t.DataCriacao, t.DataAlteracao, t.Estado,  
-        GROUP_CONCAT(d.Nome SEPARATOR ', ') AS Distritos FROM transportadora t
+        GROUP_CONCAT(d.Nome SEPARATOR ', ') AS distritos FROM transportadora t
         LEFT JOIN utilizador criador ON criador.ID = t.CriadorID
         LEFT JOIN utilizador alterador ON alterador.ID = t.AlteradorID
         LEFT JOIN transportadoradistritos td ON td.TransportadoraID = t.ID
@@ -24,7 +24,7 @@ export const transportadora = {
         t.CriadorID, criador.nome AS Criador, 
         t.AlteradorID, alterador.nome AS Alterador, 
         t.DataCriacao, t.DataAlteracao, t.Estado,  
-        GROUP_CONCAT(d.Nome SEPARATOR ', ') AS Distritos FROM transportadora t
+        GROUP_CONCAT(d.Nome SEPARATOR ', ') AS distritos FROM transportadora t
         LEFT JOIN utilizador criador ON criador.ID = t.CriadorID
         LEFT JOIN utilizador alterador ON alterador.ID = t.AlteradorID
         LEFT JOIN transportadoradistritos td ON td.TransportadoraID = t.ID
@@ -67,7 +67,7 @@ export const transportadora = {
     );
   },
 
-    // Associar Distritos a transportadora
+    // Associar distritos a transportadora
   async associarTransportadoraDistrito(transportadoraID, DistritosID) {
     try {
       const [fornRows] = await pool.query('SELECT ID FROM transportadora WHERE ID = ?', [transportadoraID]);
@@ -75,9 +75,9 @@ export const transportadora = {
         return { success: false, message: 'transportadora não encontrado.' };
       }
 
-      const [prodRows] = await pool.query('SELECT ID FROM Distritos WHERE ID = ?', [DistritosID]);
+      const [prodRows] = await pool.query('SELECT ID FROM distritos WHERE ID = ?', [DistritosID]);
       if (prodRows.length === 0) {
-        return { success: false, message: 'Distritos não encontrado.' };
+        return { success: false, message: 'distritos não encontrado.' };
       }
 
       await pool.query(
@@ -87,7 +87,7 @@ export const transportadora = {
 
       return { success: true };
     } catch (err) {
-      console.error('Erro ao associar Distritos a transportadora: ', err.message, err.stack);
+      console.error('Erro ao associar distritos a transportadora: ', err.message, err.stack);
       return { success: false, message: 'Erro interno ao associar.' };
     }
   },
@@ -100,9 +100,9 @@ export const transportadora = {
         return { success: false, message: 'transportadora não encontrado.' };
       }
 
-      const [prodRows] = await pool.query('SELECT ID FROM Distritos WHERE ID = ?', [DistritosID]);
+      const [prodRows] = await pool.query('SELECT ID FROM distritos WHERE ID = ?', [DistritosID]);
       if (prodRows.length === 0) {
-        return { success: false, message: 'Distritos não encontrado.' };
+        return { success: false, message: 'distritos não encontrado.' };
       }
 
       await pool.query(
@@ -112,7 +112,7 @@ export const transportadora = {
 
       return { success: true };
     } catch (err) {
-      console.error('Erro ao desassociar Distritos do transportadora: ', err.message, err.stack);
+      console.error('Erro ao desassociar distritos do transportadora: ', err.message, err.stack);
       return { success: false, message: 'Erro interno ao desassociar.' };
     }
   },
@@ -122,7 +122,7 @@ export const transportadora = {
     const [rows] = await pool.query(
       `SELECT p.ID, p.Nome
      FROM TransportadoraDistritos fp
-     JOIN Distritos p ON fp.DistritosID = p.ID
+     JOIN distritos p ON fp.DistritosID = p.ID
      WHERE fp.transportadoraID = ? AND p.Estado = 'ativo'`,
       [transportadoraID]
     );
@@ -143,7 +143,7 @@ export const transportadora = {
     const [rows] = await pool.query(`
     SELECT p.ID, p.Nome
     FROM TransportadoraDistritos fp
-    JOIN Distritos p ON p.ID = fp.DistritosID
+    JOIN distritos p ON p.ID = fp.DistritosID
     WHERE fp.transportadoraID = ? AND p.Estado = 'ativo'
   `, [transportadoraID]);
 

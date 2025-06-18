@@ -1,51 +1,51 @@
 import { Router } from 'express';
 const router = Router();
-import { Distritos } from '../models/distritosModels.js';
+import { distritos } from '../models/distritosModels.js';
 import authenticateToken from '../services/authenticateToken.js';
 import authorizeRole from '../services/authorizeRole.js';
 
 router.use(authenticateToken);
 
-// Obter todas as Distritos
+// Obter todas as distritos
 router.get('/', async (req, res) => {
-  const result = await Distritos.getAll();
+  const result = await distritos.getAll();
   res.json(result);
 });
 
-// Obter Distritos por ID
+// Obter distritos por ID
 router.get('/:id', async (req, res) => {
-  const result = await Distritos.getById(req.params.id);
-  if (!result) return res.status(404).json({ error: 'Distritos não encontrada' });
+  const result = await distritos.getById(req.params.id);
+  if (!result) return res.status(404).json({ error: 'distritos não encontrada' });
   res.json(result);
 });
 
-// Adicionar Distritos
+// Adicionar distritos
 router.post('/', async (req, res) => {
   criadorID = req.user.id;
   const { nome } = req.body;
-  const id = await Distritos.create(nome, criadorID);
+  const id = await distritos.create(nome, criadorID);
   res.status(201).json({ id });
 });
 
-// Atualizar Distritos
+// Atualizar distritos
 router.put('/:id', async (req, res) => {
   alteradorID = req.user.id; 
   const {nome} = req.body;
-  await Distritos.update(req.params.id, nome, alteradorID);
-  res.json({ message: 'Distritos atualizada' });
+  await distritos.update(req.params.id, nome, alteradorID);
+  res.json({ message: 'distritos atualizada' });
 });
 
-// Desativar Distritos
+// Desativar distritos
 router.delete('/:id', async (req, res) => {
   const { alteradorID } = req.body;
-  await Distritos.remove(req.params.id, alteradorID);
-  res.json({ message: 'Distritos desativada' });
+  await distritos.remove(req.params.id, alteradorID);
+  res.json({ message: 'distritos desativada' });
 });
 
-// Ativar Distritos
+// Ativar distritos
 router.patch('/:id', async (req, res) => {
   const { alteradorID } = req.body;
-  await Distritos.ativar(req.params.id, alteradorID);
-  res.json({ message: 'Distritos ativada' });
+  await distritos.ativar(req.params.id, alteradorID);
+  res.json({ message: 'distritos ativada' });
 });
 export default router;
