@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { clienteencomenda } from '../../models/utilizador/clienteEncomendaModels.js';
+import { clienteencomenda } from '../../models/utilizador/ClienteEncomendaModels.js';
 import authenticateToken from '../../services/authenticateToken.js';
 import authorizeRole from '../../services/authorizeRole.js';
 import pool from '../../database.js';
@@ -55,12 +55,12 @@ router.post('/encomendas/confirmar', authenticateToken, async (req, res) => {
     const dataEntregaStr = `${datePart} ${horarioEntrega}:00`; // '2025-06-21 15:30:00'
 
     // Criar nova encomenda
-    const [encomendaResult] = await pool.query(
-      `INSERT INTO clienteencomenda 
-        (DataEnvio, ClienteID, EstadoID, Morada, dataEntrega) 
-       VALUES (NOW(), ?, ?, ?, ?)`,
-      [clienteID, 1, morada, dataEntregaStr]
-    );
+  const [encomendaResult] = await pool.query(
+    `INSERT INTO clienteencomenda 
+      (DataEnvio, ClienteID, EstadoID, Morada, dataEntrega, TotalEncomenda, TotalProduto, totalImpostos, TotalTransporte) 
+    VALUES (NOW(), ?, ?, ?, ?, 0, 0, 0, 0)`,
+    [clienteID, 1, morada, dataEntregaStr]
+  );
     const encomendaID = encomendaResult.insertId;
 
     /*
