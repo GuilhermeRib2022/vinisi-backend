@@ -81,7 +81,7 @@ export const transportadora = {
       }
 
       await pool.query(
-        'INSERT INTO TransportadoraDistritos (transportadoraID, DistritosID) VALUES (?, ?)',
+        'INSERT INTO transportadoradistritos (transportadoraID, DistritosID) VALUES (?, ?)',
         [transportadoraID, DistritosID]
       );
 
@@ -106,7 +106,7 @@ export const transportadora = {
       }
 
       await pool.query(
-        'DELETE FROM TransportadoraDistritos WHERE transportadoraID = ? AND DistritosID = ?',
+        'DELETE FROM transportadoradistritos WHERE transportadoraID = ? AND DistritosID = ?',
         [transportadoraID, DistritosID]
       );
 
@@ -121,7 +121,7 @@ export const transportadora = {
   async listarTransportadoraDistrito(transportadoraID) {
     const [rows] = await pool.query(
       `SELECT p.ID, p.Nome
-     FROM TransportadoraDistritos fp
+     FROM transportadoradistritos fp
      JOIN distritos p ON fp.DistritosID = p.ID
      WHERE fp.transportadoraID = ? AND p.Estado = 'ativo'`,
       [transportadoraID]
@@ -142,7 +142,7 @@ export const transportadora = {
   async listar(transportadoraID) {
     const [rows] = await pool.query(`
     SELECT p.ID, p.Nome
-    FROM TransportadoraDistritos fp
+    FROM transportadoradistritos fp
     JOIN distritos p ON p.ID = fp.DistritosID
     WHERE fp.transportadoraID = ? AND p.Estado = 'ativo'
   `, [transportadoraID]);
