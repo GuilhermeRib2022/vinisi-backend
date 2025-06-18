@@ -78,7 +78,7 @@ router.post('/encomendas/confirmar', authenticateToken, async (req, res) => {
       const { ProdutoID, quantity } = item;
 
       const [stockRows] = await pool.query(
-        'SELECT Quantidade FROM ProdutoStock WHERE ProdutoID = ? FOR UPDATE',
+        'SELECT Quantidade FROM produtostock WHERE ProdutoID = ? FOR UPDATE',
         [ProdutoID]
       );
 
@@ -156,7 +156,7 @@ LIMIT 1;
         [encomendaID, ProdutoID, quantity, precoUnitario, valorIVA, total]);
 
       await pool.query(
-        'UPDATE ProdutoStock SET Quantidade = Quantidade - ?, UltimaSaida = NOW() WHERE ProdutoID = ?',
+        'UPDATE produtostock SET Quantidade = Quantidade - ?, UltimaSaida = NOW() WHERE ProdutoID = ?',
         [quantity, ProdutoID]
       );
       
