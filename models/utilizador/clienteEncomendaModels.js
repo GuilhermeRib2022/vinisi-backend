@@ -36,11 +36,14 @@ async getEncomendasCliente(user){
   const [result] = await pool.query(
     `SELECT 
     ce.ID, u.Nome, u.Morada, ce.DataEnvio, ce.DataEntrega, ce.TotalEncomenda, ce.Morada,
-    ce.TotalProduto, ce.TotalTransporte, ce.TotalImpostos, ce.EstadoID, ee.Nome AS estadoencomenda FROM clienteencomenda ce
+    ce.TotalProduto, ce.TotalTransporte, ce.TotalImpostos, ce.EstadoID, ta.Nome AS transportadora, ee.Nome AS estadoencomenda FROM clienteencomenda ce
     LEFT JOIN cliente c ON c.ID = ce.ClienteID
     LEFT JOIN utilizador u ON u.ID = c.UtilizadorID
     LEFT JOIN estadoencomenda ee ON ee.ID = ce.EstadoID
-    WHERE u.ID = ?
+    LEFT JOIN transporte t ON t.ClienteEncomendaID = ce.ID
+    LEFT JOIN transportadora ta ON ta.ID = t.TransportadoraID
+    WHERE u.ID = 19
+    ORDER BY DataEnvio DESC;
     `,
     [user]
   );
