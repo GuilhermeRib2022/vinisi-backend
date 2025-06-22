@@ -92,7 +92,7 @@ export const transporte = {
 
     const [result] = await pool.query(
       'INSERT INTO transporte (DataSaida, DataEntrega, CustoTotal, ClienteEncomendaID, FornecedorEncomendaID, TransportadoraID, CriadorID, AlteradorID, EstadoID) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, 1)',
-      [rows.DataEntrega, 10, null, id, 17, alteradorID, alteradorID]
+      [rows.DataEntrega, 5, null, id, 17, alteradorID, alteradorID]
     );
   },
 
@@ -218,7 +218,7 @@ export const transporte = {
 
     const [result] = await pool.query(
       'INSERT INTO transporte (DataSaida, DataEntrega, CustoTotal, ClienteEncomendaID, FornecedorEncomendaID, TransportadoraID, CriadorID, AlteradorID, EstadoID) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, 1)',
-      [rows.DataEntrega, 10, id, null, 17, alteradorID, alteradorID]
+      [rows.DataEntrega, 5, id, null, 17, alteradorID, alteradorID]
     );
 
   },

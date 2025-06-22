@@ -3,7 +3,7 @@ import pool from '../../database.js';
 
 export const clienteencomenda = {
 async getAll() {
-  const [rows] = await pool.query(`
+  const [test] = await pool.query(`
    SELECT 
       ce.ID, ce.ClienteID, c.Nome AS ClienteNome, ce.DataEnvio, ce.DataEntrega,
       ce.TotalEncomenda, ce.TotalProduto, ce.TotalTransporte, ce.TotalImpostos, ce.EstadoID, ce.Morada,
@@ -17,7 +17,7 @@ async getAll() {
     LEFT JOIN utilizador u2 ON ce.AlteradorID = u2.ID
     ORDER BY ce.ID DESC
   `);
-  return rows;
+  return test;
 },
 
 //Criar encomenda Inicial
