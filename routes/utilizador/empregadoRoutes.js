@@ -14,25 +14,39 @@ router.get('/', async (req, res) => {
 
 // Obter empregado por ID
 router.get('/:id', async (req, res) => {
-  const result = await empregado.getById(req.params.id);
+  const id = req.params.id;
+  const result = await empregado.getById(id);
   if (!result) return res.status(404).json({ error: 'empregado não encontrada' });
   res.json(result);
 });
 
 // Adicionar empregado
 router.post('/', async (req, res) => {
-  criadorID = req.user.id;
+  const criadorID = req.user.id;
   const { nome } = req.body;
   const id = await empregado.create(nome, criadorID);
   res.status(201).json({ id });
 });
 
-// Atualizar empregado
 router.put('/:id', async (req, res) => {
-  alteradorID = req.user.id; 
-  const {nome} = req.body;
-  await empregado.update(req.params.id, nome, alteradorID);
-  res.json({ message: 'empregado atualizada' });
+  const alteradorID = req.user.id;
+  const id = req.params.id;
+  const {nome,email,morada,generoID,dataNascimento,nacionalidadeID,categoriaFuncID} = req.body;
+
+  try {
+    const emp = await empregado.getById(id); // Pega o utilizadorID correspondente
+    if (!emp) return res.status(404).json({ error: 'Empregado não encontrado' });
+
+    const utilizadorID = emp.UtilizadorID;
+
+    // Atualizar utilizador + empregado
+    await empregado.update( id, nome,email,morada,generoID, dataNascimento,nacionalidadeID,categoriaFuncID,utilizadorID,alteradorID);
+
+    res.json({ message: 'Empregado atualizado com sucesso' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao atualizar empregado' });
+  }
 });
 
 // Desativar empregado

@@ -7,7 +7,7 @@ import authorizeRole from '../../services/authorizeRole.js';
 router.use(authenticateToken);
 
 // Obter todas as cliente
-router.get('/', async (req, res) => {
+router.get('/', authorizeRole(), async (req, res) => {
   const result = await cliente.getAll();
   res.json(result);
 });
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
 
 
 // Adicionar cliente
-router.post('/', async (req, res) => {
+router.post('/', authorizeRole(), async (req, res) => {
   criadorID = req.user.id;
   const { nome } = req.body;
   const id = await cliente.create(nome, criadorID);
@@ -41,22 +41,30 @@ router.post('/', async (req, res) => {
 });
 
 // Atualizar cliente
-router.put('/:id', async (req, res) => {
-  alteradorID = req.user.id; 
-  const {nome} = req.body;
-  await cliente.update(req.params.id, nome, alteradorID);
-  res.json({ message: 'cliente atualizada' });
+router.put('/:id', authorizeRole(), async (req, res) => {
+  const alteradorID = req.user.id;
+  const id = req.params.id;
+  const {nome,email,morada,generoID,NIF,utilizadorID} = req.body;
+
+  try {
+    await cliente.update(id, nome, email, morada, generoID, NIF, utilizadorID, alteradorID);
+    res.json({ message: 'Cliente atualizado com sucesso!' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao atualizar cliente.' });
+  }
 });
 
+
 // Desativar cliente
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorizeRole(), async (req, res) => {
   const { alteradorID } = req.body;
   await cliente.remove(req.params.id, alteradorID);
   res.json({ message: 'cliente desativada' });
 });
 
 // Ativar cliente
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authorizeRole(), async (req, res) => {
   const { alteradorID } = req.body;
   await cliente.ativar(req.params.id, alteradorID);
   res.json({ message: 'cliente ativada' });
