@@ -31,7 +31,7 @@ export const promocao = {
   async create(dataInicio, dataValidade, descontoTipo, DescontoValor, motivo, criadorID) {
     const [result] = await pool.query(
       'INSERT INTO promocao (DataInicio, DataValidade, DescontoTipo, DescontoValor, Motivo, CriadorID, AlteradorID, EstadoID) VALUES (?, ?, ?, ?, ?, ?, ?, 1)',
-      [dataInicio, dataValidade, descontoTipo, DescontoValor, motivo, criadorID, criadorID]
+      [dataInicio, dataValidade || null, descontoTipo, DescontoValor, motivo, criadorID, criadorID]
     );
     return result.insertId;
   },
@@ -40,7 +40,7 @@ export const promocao = {
   async update(id, dataInicio, dataValidade, descontoTipo, descontoValor, motivo, alteradorID) {
     await pool.query(
       'UPDATE promocao SET DataInicio = ?, DataValidade = ?, DescontoTipo = ?, DescontoValor = ?, Motivo = ?, AlteradorID = ? WHERE ID = ?',
-      [dataInicio, dataValidade, descontoTipo, descontoValor, motivo, alteradorID, id]
+      [dataInicio, dataValidade || null, descontoTipo, descontoValor, motivo, alteradorID, id]
     );
   },
 

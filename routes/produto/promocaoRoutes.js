@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     const criadorID = req.user.id;
     const { dataInicio, dataValidade, descontoTipo, descontoValor, motivo } = req.body;
 
-    if (new Date(dataInicio) >= new Date(dataValidade)) {
+    if ((new Date(dataInicio) >= new Date(dataValidade)) && dataValidade) {
       return res.status(400).json({ erro: 'Data de início deve ser anterior à data de validade.' });
     }
 
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ erro: 'Valor do desconto inválido.' });
     }
 
-    const result = await promocao.create(dataInicio, dataValidade || null, descontoTipo, valor, motivo, criadorID);
+    const result = await promocao.create(dataInicio, dataValidade, descontoTipo, valor, motivo, criadorID);
     res.status(201).json({ result });
   } catch (error) {
     console.error(error);
