@@ -58,22 +58,22 @@ router.get('/:id', async (req, res) => {
 // Atualizar promocao
 router.put('/:id', async (req, res) => {
   const alteradorID = req.user.id; 
-  const {dataInicio, dataValidade, descontoTipo, descontoValor, motivo} = req.body;
+  const {dataInicio, dataValidade, descontoTipo, DescontoValor, motivo} = req.body;
 
       // Validação de datas
     if (new Date(dataInicio) >= new Date(dataValidade)) {
       return res.status(400).json({ erro: 'Data de início deve ser anterior à data de validade.' });
     }
 
-    if (descontoValor < 0) {
+    if (DescontoValor < 0) {
       return res.status(400).json({ erro: 'Um desconto deve ter valor positivo.' });
     } 
 
-    if (descontoValor > 100 && descontoTipo == 'percentual') {
+    if (DescontoValor > 100 && descontoTipo == 'percentual') {
       return res.status(400).json({ erro: 'Um desconto percentual deve ser menor que 100%.' });
     } 
 
-  await promocao.update(req.params.id, dataInicio, dataValidade, descontoTipo, descontoValor, motivo, alteradorID);
+  await promocao.update(req.params.id, dataInicio, dataValidade, descontoTipo, DescontoValor, motivo, alteradorID);
   res.json({ message: 'promocao atualizada' });
 });
 

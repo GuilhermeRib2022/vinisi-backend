@@ -28,10 +28,10 @@ export const promocao = {
   },
 
   //Criar promoção
-  async create(dataInicio, dataValidade, descontoTipo, descontoValor, motivo, criadorID) {
+  async create(dataInicio, dataValidade, descontoTipo, DescontoValor, motivo, criadorID) {
     const [result] = await pool.query(
       'INSERT INTO promocao (DataInicio, DataValidade, DescontoTipo, DescontoValor, Motivo, CriadorID, AlteradorID, EstadoID) VALUES (?, ?, ?, ?, ?, ?, ?, 1)',
-      [dataInicio, dataValidade, descontoTipo, descontoValor, motivo, criadorID, criadorID]
+      [dataInicio, dataValidade, descontoTipo, DescontoValor, motivo, criadorID, criadorID]
     );
     return result.insertId;
   },
