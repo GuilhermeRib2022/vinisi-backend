@@ -13,10 +13,10 @@ const IVA = 0.13;
 
 router.get('/user', async (req, res) => {
   const user = req.user.id;
-  const Encomendas = await clienteencomenda.getEncomendasCliente(user);
-  res.json(Encomendas);
+  console.log(req.user)
+  const encomendas = await clienteencomenda.getEncomendasCliente(user);
+  res.json(encomendas);
 });
-
 
 router.post('/encomendas/confirmar', authenticateToken, async (req, res) => {
   const { carrinho, morada, transportadoraID, horarioEntrega } = req.body;

@@ -42,7 +42,7 @@ async getEncomendasCliente(user){
     LEFT JOIN estadoencomenda ee ON ee.ID = ce.EstadoID
     LEFT JOIN transporte t ON t.ClienteEncomendaID = ce.ID
     LEFT JOIN transportadora ta ON ta.ID = t.TransportadoraID
-    WHERE u.ID = 19
+    WHERE u.ID = ?
     ORDER BY DataEnvio DESC;
     `,
     [user]
