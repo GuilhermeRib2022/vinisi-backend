@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ erro: 'Valor do desconto inválido.' });
     }
 
-    const result = await promocao.create(dataInicio, dataValidade, descontoTipo, valor, motivo, criadorID);
+    const result = await promocao.create(dataInicio, dataValidade || null, descontoTipo, valor, motivo, criadorID);
     res.status(201).json({ result });
   } catch (error) {
     console.error(error);
@@ -73,7 +73,7 @@ router.put('/:id', async (req, res) => {
       return res.status(400).json({ erro: 'Um desconto percentual deve ser menor que 100%.' });
     } 
 
-  await promocao.update(req.params.id, dataInicio, dataValidade, descontoTipo, DescontoValor, motivo, alteradorID);
+  await promocao.update(req.params.id, dataInicio, dataValidade || null, descontoTipo, DescontoValor, motivo, alteradorID);
   res.json({ message: 'promocao atualizada' });
 });
 
@@ -97,6 +97,19 @@ router.put('/:id/produtos', async (req, res) => {
 
     // 2. Associar novos produtos
     for (const produtoID of produtos) {
+      const produto = await promocao.buscarProdutoPorId(produtoID); // função que retorna { preco: number, ... }
+
+      if (!produto) {
+        return res.status(400).json({ message: `Produto ID ${produtoID} não encontrado.` });
+      }
+
+      // Validação: desconto fixo não pode ser maior ou igual ao preço do produto
+      if (promo.descontoTipo === 'fixo' && promo.DescontoValor >= produto.preco) {
+        return res.status(400).json({
+          message: `Desconto fixo (${promo.DescontoValor}) não pode ser maior ou igual ao preço do produto (ID ${produtoID}, preço: ${produto.preco}).`
+        });
+      }
+
       const result = await promocao.associarProdutoPromocao(promocaoID, produtoID);
       if (!result.success) {
         return res.status(400).json({ message: `Erro ao associar produto ID ${produtoID}: ${result.message}` });
