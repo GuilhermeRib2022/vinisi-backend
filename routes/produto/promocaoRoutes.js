@@ -27,6 +27,10 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ erro: 'Um desconto deve ter valor positivo.' });
     } 
 
+    if (descontoValor > 100 && descontoTipo == 'percentual') {
+      return res.status(400).json({ erro: 'Um desconto percentual deve ser menor que 100%.' });
+    } 
+
     const valor = Number(descontoValor);
     if (isNaN(valor)) {
       return res.status(400).json({ erro: 'Valor do desconto inválido.' });
